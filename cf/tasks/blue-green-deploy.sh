@@ -11,7 +11,7 @@ green_app_route="${green_app_route//./_}"
 
 cf login -a $CF_API -u $CF_USER -p $CF_PWD -o $CF_ORG -s $CF_SPACE
 
-cf push $app_name -f app-source/${CF_MANIFEST} -p artifact/*.* -n $green_app_route
+cf push $app_name -f app-source/${CF_MANIFEST} -p artifact/ -n $green_app_route
 
 cf map-route $app_name $CF_DOMAIN --hostname $CF_HOSTNAME
 
@@ -48,5 +48,7 @@ for name in $app_names; do
     if [ "$name" != "$app_name" ]
     then
       # TO DO: clean up blue
+      unmap route
+      delete blue
     fi
 done
